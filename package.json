@@ -1,21 +1,27 @@
 {
   "name": "hopcroft",
   "version": "1.0.0",
-  "description": "",
+  "description": "Discord bot for reminding discord users of the Leetcode Problem of the Day.",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node index.js",
+    "start": "node ./dist/index.js",
+    "start-trace": "node index.js --trace-warnings",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "cfoulk",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "devDependencies": {
+    "@types/node": "^20.8.2",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "@typescript-eslint/parser": "^6.7.4",
+    "eslint": "^8.50.0",
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "cron": "^3.0.0",
     "discord.js": "^14.13.0",
     "dotenv": "^16.3.1"
   }

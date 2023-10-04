@@ -1,12 +1,9 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.postProblem = void 0;
-const postProblem = async () => {
+export const postProblem = async () => {
     try {
-        const response = await fetch("https://leetcode.com/graphql", {
-            method: "POST",
+        const response = await fetch('https://leetcode.com/graphql', {
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({
                 query: `
@@ -38,19 +35,31 @@ const postProblem = async () => {
         `,
             }),
         });
+
         const data = await response.json();
         const problemOfTheDay = data.data.activeDailyCodingChallengeQuestion;
         const problem = problemOfTheDay.question;
-        const problemTitle = problem.title;
+
+        const problemTitle = problem.title as string;
         const problemLink = problemOfTheDay.link;
-        const res = {
-            title: problemTitle,
-            link: `https://leetcode.com${problemLink}`,
+        const problemTags = problem.topicTags.map(tag => tag.name);
+
+
+        type ret = {
+            title: string;
+            link: string;
+            difficulty: string;
+            tags: string[];
         };
+        const res: ret = {
+            title: problemTitle,
+            link: `https://leetcode.com${problemLink}` as string,
+            difficulty: problem.difficulty,
+            tags: problemTags,
+        };
+
         return res;
-    }
-    catch (error) {
-        console.error("Error fetching problem:", error);
+    } catch (error) {
+        console.error('Error fetching problem:', error);
     }
 };
-exports.postProblem = postProblem;
