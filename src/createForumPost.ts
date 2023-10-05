@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import {
     Client,
+    ForumChannel,
     TextChannel,
     ThreadAutoArchiveDuration,
 } from 'discord.js';
@@ -9,7 +10,7 @@ import { postProblem } from './problems.js';
 export async function createForumPost(client: Client) {
     const forum = client.channels.cache.get(
         process.env.FORUM_CHANNEL_ID as string,
-    ) as TextChannel;
+    ) as ForumChannel;
 
     const result = await postProblem();
     if (result !== undefined) {

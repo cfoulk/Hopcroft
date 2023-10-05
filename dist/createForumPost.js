@@ -7,7 +7,7 @@ export async function createForumPost(client) {
     if (result !== undefined) {
         const { title, link, difficulty, tags } = result;
         const guild = client.guilds.cache.get(process.env.SERVER_ID);
-        const myRole = guild.roles.cache.find(role => role.name === 'daily-leetcode');
+        const myRole = guild.roles.cache.find(role => role.name === process.env.ROLE_NAME);
         console.log(`Found the role ${myRole.name}`);
         const tempMessage = `@here ${myRole}\n${title}\n${link} \n\nReact with a 🚀!\n**Difficulty**: ${difficulty}\n**Tags**:${tags.map((t) => ` ${t}`)}`;
         const date = new Date().toLocaleDateString('en-us', {
