@@ -2,7 +2,6 @@ import 'dotenv/config';
 import {
     Client,
     ForumChannel,
-    TextChannel,
     ThreadAutoArchiveDuration,
 } from 'discord.js';
 import { postProblem } from './problems.js';
