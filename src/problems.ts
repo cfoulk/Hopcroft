@@ -1,9 +1,9 @@
 export const postProblem = async () => {
     try {
-        const response = await fetch('https://leetcode.com/graphql', {
-            method: 'POST',
+        const response = await fetch("https://leetcode.com/graphql", {
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 query: `
@@ -40,10 +40,11 @@ export const postProblem = async () => {
         const problemOfTheDay = data.data.activeDailyCodingChallengeQuestion;
         const problem = problemOfTheDay.question;
 
-        const problemTitle = problem.title as string;
+        const problemTitle = problem.title;
         const problemLink = problemOfTheDay.link;
-        const problemTags = problem.topicTags.map(tag => tag.name);
-
+        const problemTags = problem.topicTags.map(
+            (tag: { name: string }) => tag.name,
+        );
 
         type ret = {
             title: string;
@@ -53,13 +54,14 @@ export const postProblem = async () => {
         };
         const res: ret = {
             title: problemTitle,
-            link: `https://leetcode.com${problemLink}` as string,
+            link: `https://leetcode.com${problemLink}`,
             difficulty: problem.difficulty,
             tags: problemTags,
         };
 
         return res;
     } catch (error) {
-        console.error('Error fetching problem:', error);
+        console.error("Error fetching problem:", error);
+        return undefined;
     }
 };

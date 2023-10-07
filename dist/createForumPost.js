@@ -1,6 +1,8 @@
 import 'dotenv/config';
 import { ThreadAutoArchiveDuration, } from 'discord.js';
 import { postProblem } from './problems.js';
+export const TIMEOUT = 6000; //3600000
+export let attempts = 0;
 export async function createForumPost(client) {
     const forum = client.channels.cache.get(process.env.FORUM_CHANNEL_ID);
     const result = await postProblem();
@@ -28,6 +30,14 @@ export async function createForumPost(client) {
             .catch(console.error);
     }
     else {
-        return 'error fetch problem';
+        if (attempts < 6) {
+            attempts++;
+            setTimeout(() => { createForumPost(client); }, TIMEOUT); // makes an attempt every hour for 6 hours
+            console.log("Attempt " + attempts + " at " + new Date().toLocaleTimeString('en-us'));
+        }
+        else {
+            console.log("All attempts exhausted.");
+            attempts = 0;
+        }
     }
 }

@@ -6,6 +6,9 @@ import {
 } from 'discord.js';
 import { postProblem } from './problems.js';
 
+export const TIMEOUT = 3600000;
+export let attempts = 0;
+
 export async function createForumPost(client: Client) {
     const forum = client.channels.cache.get(
         process.env.FORUM_CHANNEL_ID as string,
@@ -39,6 +42,13 @@ export async function createForumPost(client: Client) {
             })
             .catch(console.error);
     } else {
-        return 'error fetch problem';
+        if (attempts < 20) {
+            attempts++;
+            setTimeout(() => { createForumPost(client) }, TIMEOUT); // makes an attempt every hour for 20 hours
+            console.log("Attempt " + attempts + " at " + new Date().toLocaleTimeString('en-us'));
+        } else {
+            console.log("All attempts exhausted.");
+            attempts = 0;
+        }
     }
 }

@@ -47,9 +47,11 @@ export const postProblem = async () => {
             difficulty: problem.difficulty,
             tags: problemTags,
         };
-        return res;
+        // return res;
+        return undefined;
     }
     catch (error) {
         console.error('Error fetching problem:', error);
+        return undefined;
     }
 };
