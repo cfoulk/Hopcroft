@@ -9,17 +9,16 @@ import { postProblem } from './problems.js';
 export const TIMEOUT = 3600000;
 export let attempts = 0;
 
-export async function createForumPost(client: Client) {
-    const forum = client.channels.cache.get(
-        process.env.FORUM_CHANNEL_ID as string,
-    ) as ForumChannel;
+export async function createForumPost(client: Client, forum: ForumChannel) {
 
     const result = await postProblem();
     if (result !== undefined) {
         const { title, link, difficulty, tags } = result;
 
+        //redundant?
         const guild = client.guilds.cache.get(process.env.SERVER_ID);
         const myRole = guild.roles.cache.find(role => role.name === process.env.ROLE_NAME);
+        // need to validate this
         console.log(`Found the role ${myRole.name}`);
         const tempMessage = `@here ${myRole}\n${title}\n${link} \n\nReact with a 🚀!\n**Difficulty**: ${difficulty}\n**Tags**:${tags.map((t) => ` ${t}`)}`;
 
@@ -44,7 +43,7 @@ export async function createForumPost(client: Client) {
     } else {
         if (attempts < 20) {
             attempts++;
-            setTimeout(() => { createForumPost(client) }, TIMEOUT); // makes an attempt every hour for 20 hours
+            setTimeout(() => { createForumPost(client, forum) }, TIMEOUT); // makes an attempt every hour for 20 hours
             console.log("Attempt " + attempts + " at " + new Date().toLocaleTimeString('en-us'));
         } else {
             console.log("All attempts exhausted.");
