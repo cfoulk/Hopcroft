@@ -27,7 +27,7 @@ client.once(Events.ClientReady, (c) => {
     );
   } else {
     const job = new CronJob(
-      "0 0 * * * *",
+      "0 0 0 * * *",
       () => {
         createForumPost(client, forum);
       },
