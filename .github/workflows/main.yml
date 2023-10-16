@@ -15,7 +15,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v2
 
-      - name: Setup Artizan Api
+      - name: Setup Hopcroft Sidekiq
         uses: actions/setup-node@v2
         with:
           node-version: 16
@@ -27,7 +27,7 @@ jobs:
         run: npm run build
 
       - name: List Build Contents
-        run: ls -al build/src
+        run: ls -al dist
 
       - name: List All Contents
         run: ls -al
