@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { Client, Events, GatewayIntentBits } from "discord.js";
+import { Client, Events, GatewayIntentBits, ForumChannel } from "discord.js";
 import { createForumPost } from "./createForumPost.js";
 import { CronJob } from "cron";
 
@@ -18,15 +18,24 @@ const client = new Client({
 // We use 'c' for the event parameter to keep it separate from the already defined 'client'
 client.once(Events.ClientReady, (c) => {
   console.log(`Ready! Logged in as ${c.user.tag}`);
-  const job = new CronJob(
-    "0 * * * * *",
-    () => {
-      createForumPost(client);
-    },
-    null,
-    true,
-    "utc"
-  );
+  const forum = client.channels.cache.get(
+    process.env.FORUM_CHANNEL_ID as string
+  ) as ForumChannel;
+  if (!process.env.FORUM_CHANNEL_ID || forum == undefined) {
+    console.error(
+      "ERROR: FORUM_CHANNEL_ID does not correspond to an existing channel."
+    );
+  } else {
+    const job = new CronJob(
+      "0 0 * * * *",
+      () => {
+        createForumPost(client, forum);
+      },
+      null,
+      true,
+      "utc"
+    );
+  }
 });
 
 client.login(token);

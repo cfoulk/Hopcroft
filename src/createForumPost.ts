@@ -3,8 +3,7 @@ import { Client, ForumChannel, ThreadAutoArchiveDuration } from "discord.js";
 import { customProblem } from "./problems.js";
 
 export const TIMEOUT = 3600000;
-let c_attempts = 0;
-const MAX_NO_OF_ATTEMPTS = 20;
+let attempts = 0;
 
 const _capitalize = (inputString) => {
   return inputString.replace(
@@ -21,8 +20,10 @@ const _capitalize = (inputString) => {
   );
 };
 
-const _createCustomProblemOfTheDay = async (forum, client, dsaTopic) => {
+export async function createForumPost(client: Client, forum: ForumChannel) {
+  const dsaTopic = "linked-list";
   const result = await customProblem(dsaTopic);
+
   if (result !== undefined) {
     const { title, link, difficulty, tags } = result;
 
@@ -54,28 +55,17 @@ const _createCustomProblemOfTheDay = async (forum, client, dsaTopic) => {
       })
       .catch(console.error);
   } else {
-    if (c_attempts < MAX_NO_OF_ATTEMPTS) {
-      c_attempts++;
+    if (attempts < 20) {
+      attempts++;
       setTimeout(() => {
-        createForumPost(client);
+        createForumPost(client, forum);
       }, TIMEOUT); // makes an attempt every hour for 20 hours
       console.log(
-        "Attempt " +
-          c_attempts +
-          " at " +
-          new Date().toLocaleTimeString("en-us")
+        "Attempt " + attempts + " at " + new Date().toLocaleTimeString("en-us")
       );
     } else {
       console.warn("All attempts exhausted.");
-      c_attempts = 0;
+      attempts = 0;
     }
   }
-};
-
-export async function createForumPost(client: Client) {
-  const forum = client.channels.cache.get(
-    process.env.FORUM_CHANNEL_ID as string
-  ) as ForumChannel;
-
-  _createCustomProblemOfTheDay(forum, client, "linked-list");
 }
