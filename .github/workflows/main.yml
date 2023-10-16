@@ -1,0 +1,46 @@
+# i-07265c91a30a5770b
+
+name: hopcroft-sidekiq CI Deploy to AWS
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+
+      - name: Setup Artizan Api
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Project
+        run: npm run build
+
+      - name: List Build Contents
+        run: ls -al build/src
+
+      - name: List All Contents
+        run: ls -al
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWSCLIENT_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWSCLIENT_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWSCLIENT_REGION }}
+
+      # - name: Deploy to EC2
+      #   run: |
+      #     ssh -i <(echo "$PRIVATE_KEY") ec2-user@ec2-16-171-37-242.eu-north-1.compute.amazonaws.com "cd Hopcroft && git pull && npm install && npm run build && pm2 restart Hopcroft"
+env:
+  EC2_PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}

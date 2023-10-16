@@ -2,12 +2,11 @@
   <br>
   <a href="https://en.wikipedia.org/wiki/John_Hopcroft"><img src="./public/Hopcroft-pfp.jpg" alt="Hopcroft, named after the John Hopecroft." width="200"></a>
   <br>
-  Hopcroft
+  Hopcroft Sidekiq
   <br>
-</h1> 
+</h1>
 
-
-<h4 align="center">Hopcroft is a purpose-built Discord bot tailored to streamline community activities focused on Algorithmic Problem Solving and automation functions.</h4>
+<h4 align="center">Hopcroft Sidekiq just like Hopcroft is a purpose-built Discord bot tailored to streamline community activities focused on Algorithmic Problem Solving and automation functions.</h4>
 
 <p align="center">
   <a href="#key-features">Key Features</a> •
@@ -15,12 +14,12 @@
   <a href="#contact">Contact</a>
 </p>
 
-
 ## <a name="key-features">Key Features</a>
-* Cron scheduled postings of the Problem of the Day on Leetcode
-    - Will tag users of given roles (in .env file)
-    - Executes everyday at UTC 00:00:01 when the problem updates on Leetcode.com
-    - Outputs Necessary data of the problem (such as Difficult, tags given.. etc)
+
+- Cron scheduled postings of the Problem of the Day on Leetcode
+  - Will tag users of given roles (in .env file)
+  - Executes everyday at UTC 00:00:01 when the problem updates on Leetcode.com
+  - Outputs Necessary data of the problem (such as Difficult, tags given.. etc)
 
 ## <a name="how-to-use">Use Locally</a>
 
@@ -28,7 +27,7 @@
 
 ```bash
 # Clone this repository
-$ git clone https://github.com/cfoulk/Hopcroft
+$ git clone https://github.com/ninjamovesonly/Hopcroft
 
 # enter new repository directory
 $ cd Hopcroft
