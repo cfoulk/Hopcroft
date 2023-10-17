@@ -6,6 +6,9 @@ export const TIMEOUT = 3600000;
 let attempts = 0;
 
 const _capitalize = (inputString) => {
+  if (!inputString.includes("-")) {
+    return inputString.charAt(0).toUpperCase() + inputString.slice(1);
+  }
   return inputString.replace(
     /([a-z]+)-([a-z]+)/g,
     function (_, firstWord, secondWord) {
