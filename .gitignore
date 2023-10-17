@@ -1,6 +1,4 @@
 node_modules
 .env
-id_rsa*
-hopcroftsidekiq*
+hopcroftsidekiq.pem
 dist
-public*
