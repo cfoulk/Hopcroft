@@ -3,3 +3,4 @@ node_modules
 id_rsa*
 hopcroftsidekiq*
 dist
+public*
