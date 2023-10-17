@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://en.wikipedia.org/wiki/John_Hopcroft"><img src="./public/Hopcroft-pfp.jpg" alt="Hopcroft, named after the John Hopecroft." width="200"></a>
+  <a href="https://en.wikipedia.org/wiki/John_Hopcroft"><img src="./public/hopcroftsidekiq.jpg" alt="Hopcroft, named after the John Hopecroft." width="200"></a>
   <br>
   Hopcroft Sidekiq
   <br>
