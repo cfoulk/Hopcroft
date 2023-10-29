@@ -25,7 +25,7 @@ client.once(Events.ClientReady, (c) => {
         console.error('ERROR: FORUM_CHANNEL_ID does not correspond to an existing channel.')
     } else {
         const job = new CronJob(
-            '0 * * * * *',
+            '1 0 0 * * *',
             () => {
                 createForumPost(client, forum);
             },
