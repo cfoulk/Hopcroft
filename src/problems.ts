@@ -1,6 +1,8 @@
 import fs from "fs";
 import path from "path";
 
+const DSA_DIFFICULTY = "MEDIUM";
+
 const __readFile = () => {
   const filePath = path.join(process.cwd(), "/public/posts.json");
   return {
@@ -9,9 +11,9 @@ const __readFile = () => {
   };
 };
 
-const _appendSlug = (slug, dsaTopic) => {
+const _appendSlug = (slug, dsaTopic, dsaDifficulty) => {
   const { slugs, filePath } = __readFile();
-  slugs[dsaTopic].push(slug);
+  slugs[dsaTopic[dsaDifficulty]].push(slug);
   fs.writeFileSync(filePath, JSON.stringify(slugs));
 };
 
@@ -59,7 +61,7 @@ export const customProblem = async (dsaTopic) => {
           limit: 50,
           filters: {
             tags: [dsaTopic],
-            difficulty: "MEDIUM",
+            difficulty: DSA_DIFFICULTY,
           },
         },
       }),
@@ -82,7 +84,7 @@ export const customProblem = async (dsaTopic) => {
       randQuestion = _generateRandomQuestion(problemsetQuestionList);
     }
 
-    _appendSlug(randQuestion.titleSlug, dsaTopic);
+    _appendSlug(randQuestion.titleSlug, dsaTopic, DSA_DIFFICULTY);
 
     return {
       title: randQuestion.title,
