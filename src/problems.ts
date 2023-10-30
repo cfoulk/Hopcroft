@@ -59,7 +59,7 @@ export const customProblem = async (dsaTopic) => {
           limit: 50,
           filters: {
             tags: [dsaTopic],
-            difficulty: "EASY",
+            difficulty: "MEDIUM",
           },
         },
       }),
