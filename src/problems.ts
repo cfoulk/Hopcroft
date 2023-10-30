@@ -11,9 +11,9 @@ const __readFile = () => {
   };
 };
 
-const _appendSlug = (slug, dsaTopic, dsaDifficulty) => {
+const _appendSlug = (slug, dsaTopic) => {
   const { slugs, filePath } = __readFile();
-  slugs[dsaTopic[dsaDifficulty]].push(slug);
+  slugs[dsaTopic[DSA_DIFFICULTY]].push(slug);
   fs.writeFileSync(filePath, JSON.stringify(slugs));
 };
 
@@ -75,7 +75,9 @@ export const customProblem = async (dsaTopic) => {
 
     const { slugs } = __readFile();
 
-    if (problemsetQuestionList.total <= slugs[dsaTopic].length) {
+    if (
+      problemsetQuestionList.total <= slugs[dsaTopic[DSA_DIFFICULTY]].length
+    ) {
       console.error("No more questions. Increase limit.");
       return undefined;
     }
@@ -84,7 +86,7 @@ export const customProblem = async (dsaTopic) => {
       randQuestion = _generateRandomQuestion(problemsetQuestionList);
     }
 
-    _appendSlug(randQuestion.titleSlug, dsaTopic, DSA_DIFFICULTY);
+    _appendSlug(randQuestion.titleSlug, dsaTopic);
 
     return {
       title: randQuestion.title,
