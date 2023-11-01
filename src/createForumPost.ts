@@ -3,6 +3,7 @@ import { Client, ForumChannel, ThreadAutoArchiveDuration } from "discord.js";
 import { customProblem } from "./problems.js";
 
 export const TIMEOUT = 3600000;
+const TOTAL_ATTEMPTS = 1;
 let attempts = 0;
 
 const _capitalize = (inputString) => {
@@ -58,7 +59,8 @@ export async function createForumPost(client: Client, forum: ForumChannel) {
       })
       .catch(console.error);
   } else {
-    if (attempts < 20) {
+    console.log("Error creating post");
+    if (attempts < TOTAL_ATTEMPTS) {
       attempts++;
       setTimeout(() => {
         createForumPost(client, forum);

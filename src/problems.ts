@@ -13,7 +13,7 @@ const __readFile = () => {
 
 const _appendSlug = (slug, dsaTopic) => {
   const { slugs, filePath } = __readFile();
-  slugs[dsaTopic[DSA_DIFFICULTY]].push(slug);
+  slugs[dsaTopic][DSA_DIFFICULTY].push(slug);
   fs.writeFileSync(filePath, JSON.stringify(slugs));
 };
 
@@ -26,11 +26,12 @@ const _generateRandomQuestion = (problemsetQuestionList) => {
 const _isNotAcceptedQuestion = (questionSlug, dsaTopic) => {
   const { slugs } = __readFile();
 
-  return slugs[dsaTopic].includes(questionSlug);
+  return slugs[dsaTopic][DSA_DIFFICULTY].includes(questionSlug);
 };
 
 export const customProblem = async (dsaTopic) => {
   try {
+    console.log("creating problem...");
     const response = await fetch("https://leetcode.com/graphql", {
       method: "POST",
       headers: {
@@ -76,7 +77,7 @@ export const customProblem = async (dsaTopic) => {
     const { slugs } = __readFile();
 
     if (
-      problemsetQuestionList.total <= slugs[dsaTopic[DSA_DIFFICULTY]].length
+      problemsetQuestionList.total <= slugs[dsaTopic][DSA_DIFFICULTY].length
     ) {
       console.error("No more questions. Increase limit.");
       return undefined;
